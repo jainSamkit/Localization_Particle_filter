@@ -50,12 +50,11 @@ int main()
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
-  	cout<<"In the loop"<<endl;
-  	cout<<length<<endl;
+  	
     if (length && length > 2 && data[0] == '4' && data[1] == '2')
     {
       auto s = hasData(std::string(data));
-      cout<<s<<endl;
+      
       if (s != "") {
       	
       	
@@ -67,6 +66,7 @@ int main()
 
 
           if (!pf.initialized()) {
+            cout<<"initializing"<<endl;
 
           	// Sense noisy position data from the simulator
           	
@@ -77,7 +77,8 @@ int main()
 			pf.init(sense_x, sense_y, sense_theta, sigma_pos);
 		  }
 		  else {
-		  	cout<<"In the prediction zone"<<endl;
+        
+		  	// cout<<"In the prediction zone"<<endl;
 
 		  	// cout<<"samkit"<<endl;
 			// Predict the vehicle's next state from previous (noiseless control) data.
@@ -117,8 +118,8 @@ int main()
         	}
 
 		  // Update the weights and resample
-		  pf.updateWeights(sensor_range, sigma_landmark, noisy_observations, map);
-		  pf.resample();
+		   pf.updateWeights(sensor_range, sigma_landmark, noisy_observations, map);
+		   pf.resample();
 
 
 
@@ -158,7 +159,7 @@ int main()
 	  	  
         }
       } else {
-      	cout<<"not got it"<<endl;
+      	
         std::string msg = "42[\"manual\",{}]";
         ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
       }
@@ -201,6 +202,7 @@ int main()
     return -1;
   }
   h.run();
+  cout<<"Going back now"<<endl;
 }
 
 
